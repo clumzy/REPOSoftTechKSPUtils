@@ -147,7 +147,7 @@ namespace BackgroundResources
                             {
                                 ModuleHandlers.Add(new Generator(modulesnapshot.moduleValues, this, modulesnapshot, partsnapshot));
                             }
-                            if (modulesnapshot.moduleName == "FissionGenerator")
+                            if (modulesnapshot.moduleName == "ModuleSystemHeatFissionReactor")
                             {
                                 ModuleHandlers.Add(new NearFutureFissionGenerator(modulesnapshot.moduleValues, this, modulesnapshot, partsnapshot));
                             }
@@ -204,7 +204,7 @@ namespace BackgroundResources
                         {
                             return true;
                         }
-                        if (modulesnapshot.moduleName == "FissionGenerator")
+                        if (modulesnapshot.moduleName == "ModuleSystemHeatFissionReactor")
                         {
                             return true;
                         }

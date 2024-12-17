@@ -43,7 +43,7 @@ namespace BackgroundResources
             InterestingModules.Add("ModuleDeployableSolarPanel", ModuleType.Producer);
             InterestingModules.Add("ModuleGenerator", ModuleType.Producer);
             InterestingModules.Add("KopernicusSolarPanel", ModuleType.Producer);
-            InterestingModules.Add("FissionGenerator", ModuleType.Producer);
+            InterestingModules.Add("ModuleSystemHeatFissionReactor", ModuleType.Producer);
             InterestingModules.Add("TacGenericConverter", ModuleType.Both);
             InterestingModules.Add("ModuleResourceConverter", ModuleType.Both);
             InterestingModules.Add("DeepFreezer", ModuleType.Consumer);

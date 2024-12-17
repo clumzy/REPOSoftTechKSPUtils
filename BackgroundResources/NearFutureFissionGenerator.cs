@@ -11,8 +11,8 @@
             PartModule = modulesnapshot;
             isEnabled = false;
             generationRate = 0f;
-            node.TryGetValue("CurrentGeneration", ref generationRate);
-            node.TryGetValue("isEnabled", ref isEnabled);
+            node.TryGetValue("CurrentElectricalGeneration", ref generationRate);
+            node.TryGetValue("Enabled", ref isEnabled);
             this.moduleType = UnloadedResources.ModuleType.Producer;
         }
 
