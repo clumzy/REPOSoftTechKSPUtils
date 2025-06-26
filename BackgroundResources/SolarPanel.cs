@@ -28,7 +28,7 @@ namespace BackgroundResources
     class SolarPanel : SnapshotModuleHandler
     {
         public ModuleDeployableSolarPanel.PanelType panelType = ModuleDeployableSolarPanel.PanelType.FLAT;
-        public float chargeRate = 1f;
+        public float chargeRate = 24f;
         public Vector3d position;
         public Quaternion orientation;
         public FloatCurve powerCurve;
@@ -73,7 +73,18 @@ namespace BackgroundResources
             {
                 panelType = (ModuleDeployableSolarPanel.PanelType)System.Enum.Parse(typeof(ModuleDeployableSolarPanel.PanelType), node.GetValue("type"));
             }
-            node.TryGetValue("chargeRate", ref chargeRate);
+            bool hasChargeRate = node.TryGetValue("chargeRate", ref this.chargeRate);
+            // log
+            if (!hasChargeRate)
+            {
+                Debug.Log("[UnloadedResources]: SolarPanel - No chargeRate found for " + partsnapshot.partName + ". Defaulting to 24.");
+                this.chargeRate = 24f;
+            }
+            //print debug all nodes from node.nodes
+            foreach (ConfigNode.Value value in node.values)
+            {
+                Debug.Log("[UnloadedResources]: SolarPanel - Node Value: " + value.name + " = " + value.value);
+            }
             node.TryGetValue("sunAOA", ref this.sunAOA);
             node.TryGetValue("flowRate", ref this.flowRate);
             node.TryGetValue("flowMult", ref this.flowMult);
@@ -111,7 +122,7 @@ namespace BackgroundResources
                 {
                     continue;
                 }
-                if (part.Modules[i].moduleName == "ModuleDeployableSolarPanel" || part.Modules[i].moduleName == "KopernicusSolarPanel")
+                if (part.Modules[i].moduleName == "ModuleDeployableSolarPanel" || part.Modules[i].moduleName == "KopernicusSolarPanel" || part.Modules[i].moduleName == "KopernicusSolarPanelsFixer")
                 {
                     ModuleDeployableSolarPanel panelModule = (ModuleDeployableSolarPanel) part.Modules[i];
                     Transform solarTransform = panelModule.part.FindModelTransform(panelModule.secondaryTransformName);
@@ -133,6 +144,9 @@ namespace BackgroundResources
                     powerCurve = panelModule.powerCurve;
                     position = partsnapshot.position;
                     orientation = partsnapshot.rotation;
+                    // we get the charge rate from the module, not from the node
+                    //because of an update from Kopernicus
+                    chargeRate = panelModule.chargeRate;
                     break;
                 }
             }
@@ -253,6 +267,7 @@ namespace BackgroundResources
                 float tempFactor = tempCurve.Evaluate(temperature);
                 float resourceAmount = chargeRate * (float)orientationFactor * tempFactor * multiplier;
                 double amtReceived = 0f;
+                Debug.Log($"[UnloadedResources]: SolarPanel - in_sunlight: {in_sunlight}, orientationFactor: {orientationFactor}, chargeRate: {chargeRate}, tempFactor: {tempFactor}, multiplier: {multiplier}, resourceAmount: {resourceAmount}, sunTracking: {sunTracking}, deployState: {deployState}");
                 UnloadedResourceProcessing.RequestResource(vessel.protovessel, "ElectricCharge", resourceAmount * TimeWarp.fixedDeltaTime, out amtReceived, true);
             }
         }

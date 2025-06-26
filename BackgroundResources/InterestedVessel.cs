@@ -196,7 +196,7 @@ namespace BackgroundResources
                     ProtoPartModuleSnapshot modulesnapshot = partsnapshot.modules[j];
                     if (UnloadedResources.InterestingModules.ContainsKey(modulesnapshot.moduleName))
                     {
-                        if (modulesnapshot.moduleName == "ModuleDeployableSolarPanel" || modulesnapshot.moduleName == "KopernicusSolarPanel")
+                        if (modulesnapshot.moduleName == "ModuleDeployableSolarPanel" || modulesnapshot.moduleName == "KopernicusSolarPanel" || modulesnapshot.moduleName == "KopernicusSolarPanelsFixer")
                         {
                             return true;
                         }
