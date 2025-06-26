@@ -28,7 +28,7 @@ namespace BackgroundResources
     class SolarPanel : SnapshotModuleHandler
     {
         public ModuleDeployableSolarPanel.PanelType panelType = ModuleDeployableSolarPanel.PanelType.FLAT;
-        public float chargeRate = 24f;
+        public float chargeRate = 1f;
         public Vector3d position;
         public Quaternion orientation;
         public FloatCurve powerCurve;
@@ -77,13 +77,7 @@ namespace BackgroundResources
             // log
             if (!hasChargeRate)
             {
-                Debug.Log("[UnloadedResources]: SolarPanel - No chargeRate found for " + partsnapshot.partName + ". Defaulting to 24.");
-                this.chargeRate = 24f;
-            }
-            //print debug all nodes from node.nodes
-            foreach (ConfigNode.Value value in node.values)
-            {
-                Debug.Log("[UnloadedResources]: SolarPanel - Node Value: " + value.name + " = " + value.value);
+                Debug.Log("[UnloadedResources]: SolarPanel - No chargeRate found for " + partsnapshot.partName + ". Defaulting to 1.");
             }
             node.TryGetValue("sunAOA", ref this.sunAOA);
             node.TryGetValue("flowRate", ref this.flowRate);
@@ -146,7 +140,7 @@ namespace BackgroundResources
                     orientation = partsnapshot.rotation;
                     // we get the charge rate from the module, not from the node
                     //because of an update from Kopernicus
-                    chargeRate = panelModule.chargeRate;
+                    if (!hasChargeRate) chargeRate = panelModule.chargeRate;
                     break;
                 }
             }
