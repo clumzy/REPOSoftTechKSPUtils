@@ -267,7 +267,7 @@ namespace BackgroundResources
                 float tempFactor = tempCurve.Evaluate(temperature);
                 float resourceAmount = chargeRate * (float)orientationFactor * tempFactor * multiplier;
                 double amtReceived = 0f;
-                Debug.Log($"[UnloadedResources]: SolarPanel - in_sunlight: {in_sunlight}, orientationFactor: {orientationFactor}, chargeRate: {chargeRate}, tempFactor: {tempFactor}, multiplier: {multiplier}, resourceAmount: {resourceAmount}, sunTracking: {sunTracking}, deployState: {deployState}");
+                //Debug.Log($"[UnloadedResources]: SolarPanel - in_sunlight: {in_sunlight}, orientationFactor: {orientationFactor}, chargeRate: {chargeRate}, tempFactor: {tempFactor}, multiplier: {multiplier}, resourceAmount: {resourceAmount}, sunTracking: {sunTracking}, deployState: {deployState}");
                 UnloadedResourceProcessing.RequestResource(vessel.protovessel, "ElectricCharge", resourceAmount * TimeWarp.fixedDeltaTime, out amtReceived, true);
             }
         }
